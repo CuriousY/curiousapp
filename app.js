@@ -1,5 +1,6 @@
 var express = require("express"),
 bodyParser  = require("body-parser"),
+request = require("request"),
 // mongoose    = require("mongoose"),
 app         = express();
 
@@ -53,6 +54,24 @@ app.get("/blogs",function(req,res){
    
 });
 
+
+app.get("/getEventData",function(req,res){
+    
+    request("http://mercerdev.www.marshinc.net/bin/server/alexaSearchServlet"
+                ,function(error,response,body){
+        
+        if(error){
+            console.log('error fetchin data ');
+        }
+        else{
+            
+            var bodyJson = JSON.parse(body);
+            res.send(bodyJson);
+        }
+         
+    });
+    
+});
 
 app.listen(process.env.PORT,process.env.IP,function(){
     console.log("Movie app has started : listening to " + process.env.PORT);  
